@@ -19,7 +19,7 @@ across invocations.</p>
 <h3 id="calling-ruby-functions-from-rust" class="section-header"><a href="#calling-ruby-functions-from-rust">Calling Ruby Functions from Rust</a></h3>
 <p>The <a href="../artichoke_backend/value/trait.ValueLike.html"><code>ValueLike</code></a> trait exposes a <em>funcall interface</em>
 which can call Ruby functions on a <a href="../artichoke_backend/value/struct.Value.html"><code>Value</code></a> using a <code>String</code>
-function name and a <code>Vec&lt;Value&gt;</code> or arguments. funcall takes a type
+function name and a <code>Vec&lt;Value&gt;</code> of arguments. funcall takes a type
 parameter bound by <a href="../artichoke_backend/convert/trait.TryConvert.html"><code>TryConvert</code></a> and converts the
 result of the function call to a Rust type (which may be <code>Value</code> or another
 &quot;native&quot; type).</p>
