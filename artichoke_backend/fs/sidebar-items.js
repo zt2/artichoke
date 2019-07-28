@@ -1,0 +1,1 @@
+initSidebarItems({"constant":[["RUBY_LOAD_PATH",""]],"struct":[["Filesystem","Virtual filesystem that wraps a [`artichoke_vfs`] [`FakeFileSystem`]."],["Metadata",""]],"type":[["RequireFunc",""]]});

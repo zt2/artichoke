@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["rubygems",""]],"trait":[["Gem","Define a Rubygem that can be installed into an [`Mrb`] interpreter."]]});

@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["init","Load the [`RackProtection`] gem into an interpreter."]]});

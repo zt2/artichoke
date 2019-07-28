@@ -1,1 +1,0 @@
-initSidebarItems({"trait":[["MrbTopSelf","Return a [`Value`]-wrapped reference to \"top self\"."]]});

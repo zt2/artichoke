@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["LastError",""]],"struct":[["Exception","Metadata about a Ruby exception."]],"trait":[["MrbExceptionHandler","Extract the last exception thrown on the interpreter."]]});

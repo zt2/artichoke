@@ -1,8 +1,7 @@
 var ALIASES = {};
+ALIASES["artichoke_backend"] = {};
+ALIASES["artichoke_frontend"] = {};
 ALIASES["artichoke_vfs"] = {};
-ALIASES["mruby"] = {};
-ALIASES["mruby_bin"] = {};
-ALIASES["mruby_gems"] = {};
 ALIASES["mruby_sys"] = {};
 ALIASES["rirb"] = {};
 ALIASES["spec_runner"] = {};

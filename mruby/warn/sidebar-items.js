@@ -1,1 +1,0 @@
-initSidebarItems({"trait":[["MrbWarn","Interpreters that implement [`MrbWarn`] expose methods for emitting warnings during execution."]]});

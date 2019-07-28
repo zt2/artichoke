@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["from_user_data","Extract an [`Artichoke`] interpreter from the userdata pointer on a [`sys::mrb_state`]."]]});
