@@ -25,7 +25,7 @@ type (which may be <code>Value</code> or another &quot;native&quot; type).</p>
 <p>mruby limits functions to a maximum of 16 arguments.</p>
 <h2 id="virtual-filesystem-and-kernelrequire" class="section-header"><a href="#virtual-filesystem-and-kernelrequire">Virtual Filesystem and <code>Kernel#require</code></a></h2>
 <p>The mruby <a href="../mruby/state/struct.State.html"><code>State</code></a> embeds an
-<a href="../mruby_vfs/index.html">in-memory virtual Unix filesystem</a>. The VFS stores Ruby sources
+<a href="../artichoke_vfs/index.html">in-memory virtual Unix filesystem</a>. The VFS stores Ruby sources
 that are either pure Ruby, implemented with a Rust <a href="../mruby/file/trait.MrbFile.html"><code>MrbFile</code></a>, or
 both.</p>
 <p>mruby crate implements
@@ -33,7 +33,7 @@ both.</p>
 loads sources from the VFS. For Ruby sources, the source is loaded from the VFS
 as a <code>Vec&lt;u8&gt;</code> and evaled with <a href="../mruby/eval/trait.MrbEval.html#tymethod.eval_with_context"><code>MrbEval::eval_with_context</code></a>. For
 Rust sources, <a href="../mruby/file/trait.MrbFile.html#tymethod.require"><code>MrbFile::require</code></a> methods are stored as custom
-metadata on <a href="../mruby_vfs/fake/struct.FileSystem.html"><code>File</code></a> nodes in the VFS.</p>
+metadata on <a href="../artichoke_vfs/fake/struct.FileSystem.html"><code>File</code></a> nodes in the VFS.</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">mruby</span>::<span class="ident">eval</span>::<span class="ident">MrbEval</span>;

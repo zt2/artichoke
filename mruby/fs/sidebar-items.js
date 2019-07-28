@@ -1,1 +1,1 @@
-initSidebarItems({"constant":[["RUBY_LOAD_PATH",""]],"struct":[["Metadata",""],["MrbFilesystem","Virtual filesystem that wraps a [`mruby_vfs`] [`FakeFileSystem`]."]],"type":[["RequireFunc",""]]});
+initSidebarItems({"constant":[["RUBY_LOAD_PATH",""]],"struct":[["Metadata",""],["MrbFilesystem","Virtual filesystem that wraps a [`artichoke_vfs`] [`FakeFileSystem`]."]],"type":[["RequireFunc",""]]});

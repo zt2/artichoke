@@ -1,13 +1,9 @@
 var ALIASES = {};
-ALIASES["cactusref"] = {};
-ALIASES["foolsgold"] = {};
-ALIASES["hubris"] = {};
+ALIASES["artichoke_vfs"] = {};
 ALIASES["mruby"] = {};
 ALIASES["mruby_bin"] = {};
 ALIASES["mruby_gems"] = {};
 ALIASES["mruby_sys"] = {};
-ALIASES["mruby_vfs"] = {};
-ALIASES["nemesis"] = {};
 ALIASES["rirb"] = {};
 ALIASES["spec_runner"] = {};
 ALIASES["string_scan_bench"] = {};

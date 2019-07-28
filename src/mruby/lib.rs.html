@@ -381,7 +381,7 @@
 <span class="doccomment">//! ## Virtual Filesystem and `Kernel#require`</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! The mruby [`State`](state::State) embeds an</span>
-<span class="doccomment">//! [in-memory virtual Unix filesystem](mruby_vfs). The VFS stores Ruby sources</span>
+<span class="doccomment">//! [in-memory virtual Unix filesystem](artichoke_vfs). The VFS stores Ruby sources</span>
 <span class="doccomment">//! that are either pure Ruby, implemented with a Rust [`MrbFile`](file::MrbFile), or</span>
 <span class="doccomment">//! both.</span>
 <span class="doccomment">//!</span>
@@ -390,7 +390,7 @@
 <span class="doccomment">//! loads sources from the VFS. For Ruby sources, the source is loaded from the VFS</span>
 <span class="doccomment">//! as a `Vec&lt;u8&gt;` and evaled with [`MrbEval::eval_with_context`](eval::MrbEval::eval_with_context). For</span>
 <span class="doccomment">//! Rust sources, [`MrbFile::require`](file::MrbFile::require) methods are stored as custom</span>
-<span class="doccomment">//! metadata on [`File`](mruby_vfs::FakeFileSystem) nodes in the VFS.</span>
+<span class="doccomment">//! metadata on [`File`](artichoke_vfs::FakeFileSystem) nodes in the VFS.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust</span>
 <span class="doccomment">//! use mruby::eval::MrbEval;</span>
@@ -628,7 +628,7 @@
     <span class="ident">UnreachableValue</span>(<span class="ident">sys</span>::<span class="ident">mrb_vtype</span>),
     <span class="doccomment">/// [`io::Error`] when interacting with virtual filesystem.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// See [`mruby_vfs`].</span>
+    <span class="doccomment">/// See [`artichoke_vfs`].</span>
     <span class="ident">Vfs</span>(<span class="ident">io</span>::<span class="ident">Error</span>),
 }
 
