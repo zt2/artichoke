@@ -4,7 +4,6 @@ sourcesIndex["artichoke_backend"] = {"name":"","dirs":[{"name":"convert","dirs":
 sourcesIndex["artichoke_frontend"] = {"name":"","files":["lib.rs","parser.rs","repl.rs"]};
 sourcesIndex["artichoke_vfs"] = {"name":"","dirs":[{"name":"fake","files":["mod.rs","node.rs","registry.rs","tempdir.rs"]}],"files":["lib.rs"]};
 sourcesIndex["mruby_sys"] = {"name":"","files":["args.rs","ffi.rs","lib.rs"]};
-sourcesIndex["rirb"] = {"name":"","files":["rirb.rs"]};
 sourcesIndex["spec_runner"] = {"name":"","files":["main.rs","mspec.rs"]};
 sourcesIndex["string_scan_bench"] = {"name":"","files":["string_scan_bench.rs"]};
 createSourceSidebar();
