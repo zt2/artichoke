@@ -1,4 +1,5 @@
 var ALIASES = {};
+ALIASES["airb"] = {};
 ALIASES["artichoke_backend"] = {};
 ALIASES["artichoke_frontend"] = {};
 ALIASES["artichoke_vfs"] = {};
