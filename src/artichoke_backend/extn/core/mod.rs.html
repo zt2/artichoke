@@ -27,6 +27,10 @@
 <span id="27">27</span>
 <span id="28">28</span>
 <span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">eval</span>::<span class="ident">Eval</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Artichoke</span>;
@@ -37,8 +41,10 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">error</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">hash</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">kernel</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;wasm32&quot;</span>))]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">matchdata</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">module</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;wasm32&quot;</span>))]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">regexp</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">string</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">thread</span>;
@@ -50,8 +56,10 @@
     <span class="ident">error</span>::<span class="ident">patch</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
     <span class="ident">hash</span>::<span class="ident">patch</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
     <span class="ident">kernel</span>::<span class="ident">patch</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;wasm32&quot;</span>))]</span>
     <span class="ident">matchdata</span>::<span class="ident">init</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
     <span class="ident">module</span>::<span class="ident">patch</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">target_arch</span> <span class="op">=</span> <span class="string">&quot;wasm32&quot;</span>))]</span>
     <span class="ident">regexp</span>::<span class="ident">init</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
     <span class="ident">string</span>::<span class="ident">patch</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;
     <span class="ident">thread</span>::<span class="ident">init</span>(<span class="ident">interp</span>)<span class="question-mark">?</span>;

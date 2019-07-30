@@ -403,7 +403,6 @@
 <span id="403">403</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">log</span>::<span class="ident">trace</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">Write</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">convert</span>::<span class="ident">Convert</span>;
@@ -411,7 +410,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">eval</span>::{<span class="ident">Context</span>, <span class="ident">Eval</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">error</span>::{<span class="ident">ArgumentError</span>, <span class="ident">LoadError</span>, <span class="ident">RubyException</span>, <span class="ident">RuntimeError</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::<span class="ident">types</span>::<span class="ident">Ruby</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::<span class="ident">Ruby</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::{<span class="ident">Value</span>, <span class="ident">ValueLike</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Artichoke</span>, <span class="ident">ArtichokeError</span>};
 
@@ -547,22 +546,23 @@
         <span class="kw">let</span> <span class="ident">args</span> <span class="op">=</span> <span class="ident">args</span>::<span class="ident">Rest</span>::<span class="ident">extract</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>);
 
         <span class="kw">for</span> <span class="ident">value</span> <span class="kw">in</span> <span class="ident">args</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">args</span><span class="op">|</span> <span class="ident">args</span>.<span class="ident">rest</span>).<span class="ident">unwrap_or_default</span>() {
-            <span class="macro">print</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">value</span>.<span class="ident">to_s</span>());
+            <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">to_s</span>();
+            <span class="ident">interp</span>.<span class="ident">borrow_mut</span>().<span class="ident">print</span>(<span class="ident">s</span>.<span class="ident">as_str</span>());
         }
-        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">io</span>::<span class="ident">stdout</span>().<span class="ident">flush</span>();
         <span class="ident">sys</span>::<span class="ident">mrb_sys_nil_value</span>()
     }
 
     <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">puts</span>(<span class="ident">mrb</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">mrb_state</span>, <span class="ident">_slf</span>: <span class="ident">sys</span>::<span class="ident">mrb_value</span>) <span class="op">-&gt;</span> <span class="ident">sys</span>::<span class="ident">mrb_value</span> {
-        <span class="kw">fn</span> <span class="ident">do_puts</span>(<span class="ident">value</span>: <span class="ident">Value</span>) {
+        <span class="kw">fn</span> <span class="ident">do_puts</span>(<span class="ident">interp</span>: <span class="kw-2">&amp;</span><span class="ident">Artichoke</span>, <span class="ident">value</span>: <span class="ident">Value</span>) {
             <span class="kw">if</span> <span class="ident">value</span>.<span class="ident">ruby_type</span>() <span class="op">==</span> <span class="ident">Ruby</span>::<span class="ident">Array</span> {
                 <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">array</span>) <span class="op">=</span> <span class="ident">value</span>.<span class="ident">try_into</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;&gt;</span>() {
                     <span class="kw">for</span> <span class="ident">value</span> <span class="kw">in</span> <span class="ident">array</span> {
-                        <span class="ident">do_puts</span>(<span class="ident">value</span>);
+                        <span class="ident">do_puts</span>(<span class="ident">interp</span>, <span class="ident">value</span>);
                     }
                 }
             } <span class="kw">else</span> {
-                <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">value</span>.<span class="ident">to_s</span>());
+                <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">to_s</span>();
+                <span class="ident">interp</span>.<span class="ident">borrow_mut</span>().<span class="ident">puts</span>(<span class="ident">s</span>.<span class="ident">as_str</span>());
             }
         }
 
@@ -572,10 +572,10 @@
             .<span class="ident">unwrap_or_default</span>();
 
         <span class="kw">if</span> <span class="ident">rest</span>.<span class="ident">is_empty</span>() {
-            <span class="macro">println</span><span class="macro">!</span>();
+            <span class="ident">interp</span>.<span class="ident">borrow_mut</span>().<span class="ident">puts</span>(<span class="string">&quot;&quot;</span>);
         }
         <span class="kw">for</span> <span class="ident">value</span> <span class="kw">in</span> <span class="ident">rest</span> {
-            <span class="ident">do_puts</span>(<span class="ident">value</span>);
+            <span class="ident">do_puts</span>(<span class="kw-2">&amp;</span><span class="ident">interp</span>, <span class="ident">value</span>);
         }
         <span class="ident">sys</span>::<span class="ident">mrb_sys_nil_value</span>()
     }

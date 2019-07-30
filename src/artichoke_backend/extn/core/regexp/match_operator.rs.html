@@ -135,6 +135,7 @@
 <span id="135">135</span>
 <span id="136">136</span>
 <span id="137">137</span>
+<span id="138">138</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! [`Regexp#=~`](https://ruby-doc.org/core-2.6.3/Regexp.html#method-i-3D-7E)</span>
 
@@ -146,6 +147,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">matchdata</span>::<span class="ident">MatchData</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">regexp</span>::<span class="ident">Regexp</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::<span class="ident">Int</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::<span class="ident">Value</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Artichoke</span>;
 
@@ -237,7 +239,7 @@
             }
             (
                 <span class="ident">matchdata</span>,
-                <span class="ident">Value</span>::<span class="ident">convert</span>(<span class="ident">interp</span>, <span class="ident">i64</span>::<span class="ident">try_from</span>(<span class="ident">match_pos</span>.<span class="number">0</span>).<span class="ident">ok</span>()),
+                <span class="ident">Value</span>::<span class="ident">convert</span>(<span class="ident">interp</span>, <span class="ident">Int</span>::<span class="ident">try_from</span>(<span class="ident">match_pos</span>.<span class="number">0</span>).<span class="ident">ok</span>()),
             )
         } <span class="kw">else</span> {
             (<span class="ident">matchdata</span>, <span class="ident">Value</span>::<span class="ident">convert</span>(<span class="ident">interp</span>, <span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>))

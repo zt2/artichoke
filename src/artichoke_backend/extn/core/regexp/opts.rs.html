@@ -189,12 +189,14 @@
 <span id="189">189</span>
 <span id="190">190</span>
 <span id="191">191</span>
+<span id="192">192</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Parse options parameter to `Regexp#initialize` and `Regexp::compile`.</span>
 
 <span class="kw">use</span> <span class="ident">onig</span>::<span class="ident">RegexOptions</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">regexp</span>::<span class="ident">Regexp</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::<span class="ident">Int</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::<span class="ident">Value</span>;
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Default</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Hash</span>)]</span>
@@ -257,7 +259,7 @@
     <span class="comment">// Regexp::EXTENDED, Regexp::IGNORECASE, and Regexp::MULTILINE, logically</span>
     <span class="comment">// or-ed together. Otherwise, if options is not nil or false, the regexp</span>
     <span class="comment">// will be case insensitive.</span>
-    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">options</span>) <span class="op">=</span> <span class="ident">value</span>.<span class="ident">itself</span>::<span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span>() {
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">options</span>) <span class="op">=</span> <span class="ident">value</span>.<span class="ident">itself</span>::<span class="op">&lt;</span><span class="ident">Int</span><span class="op">&gt;</span>() {
         <span class="comment">// Only deal with Regexp opts</span>
         <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">options</span> <span class="op">&amp;</span> <span class="ident">Regexp</span>::<span class="ident">ALL_REGEXP_OPTS</span>;
         <span class="ident">Options</span> {

@@ -149,10 +149,9 @@
 <span id="149">149</span>
 <span id="150">150</span>
 <span id="151">151</span>
-<span id="152">152</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">convert</span>::{<span class="ident">Convert</span>, <span class="ident">Error</span>, <span class="ident">TryConvert</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::<span class="ident">types</span>::{<span class="ident">Ruby</span>, <span class="ident">Rust</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::{<span class="ident">Ruby</span>, <span class="ident">Rust</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::<span class="ident">Value</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Artichoke</span>;
 
@@ -265,11 +264,10 @@
     <span class="kw">use</span> <span class="ident">quickcheck_macros</span>::<span class="ident">quickcheck</span>;
     <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">convert</span>::<span class="ident">TryFrom</span>;
 
-    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">convert</span>::<span class="ident">fixnum</span>::<span class="ident">Int</span>;
     <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">convert</span>::{<span class="ident">Convert</span>, <span class="ident">Error</span>, <span class="ident">TryConvert</span>};
     <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">eval</span>::<span class="ident">Eval</span>;
     <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
-    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::<span class="ident">types</span>::{<span class="ident">Ruby</span>, <span class="ident">Rust</span>};
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::{<span class="ident">Int</span>, <span class="ident">Ruby</span>, <span class="ident">Rust</span>};
     <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::<span class="ident">Value</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>

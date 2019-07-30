@@ -188,6 +188,8 @@
 <span id="188">188</span>
 <span id="189">189</span>
 <span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_docs</span>, <span class="ident">warnings</span>, <span class="ident">intra_doc_link_resolution_failure</span>)]</span>
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">clippy</span>::<span class="ident">all</span>, <span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -204,7 +206,9 @@
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_upper_case_globals</span>)]</span>
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_snake_case</span>)]</span>
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">all</span>, <span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
-<span class="kw">mod</span> <span class="ident">ffi</span>;
+<span class="kw">mod</span> <span class="ident">ffi</span> {
+    <span class="macro">include</span><span class="macro">!</span>(<span class="macro">concat</span><span class="macro">!</span>(<span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;OUT_DIR&quot;</span>), <span class="string">&quot;/ffi.rs&quot;</span>));
+}
 
 <span class="attribute">#[<span class="ident">path</span> <span class="op">=</span> <span class="string">&quot;ffi_tests.rs&quot;</span>]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
