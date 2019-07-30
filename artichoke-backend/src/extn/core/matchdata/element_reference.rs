@@ -100,33 +100,33 @@ pub fn method(interp: &Artichoke, args: Args, value: &Value) -> Result<Value, Er
                 let index = usize::try_from(-index).map_err(|_| Error::Fatal)?;
                 match captures.len().checked_sub(index) {
                     Some(0) | None => Ok(Value::convert(interp, None::<Value>)),
-                    Some(index) => Ok(Value::convert(interp, captures.at(index))),
+                    Some(index) => Ok(Value::convert(
+                        interp,
+                        captures.get(index).map(|m| m.as_str()),
+                    )),
                 }
             } else {
                 // Positive Int must be usize
                 let index = usize::try_from(index).map_err(|_| Error::Fatal)?;
-                Ok(Value::convert(interp, captures.at(index)))
+                Ok(Value::convert(
+                    interp,
+                    captures.get(index).map(|m| m.as_str()),
+                ))
             }
         }
         Args::Name(name) => {
             let index = regex
                 .capture_names()
-                .find_map(|capture| {
-                    if capture.0 == name {
-                        Some(capture.1)
+                .enumerate()
+                .find_map(|(idx, capture)| {
+                    if capture == Some(name.as_str()) {
+                        Some(idx)
                     } else {
                         None
                     }
                 })
                 .ok_or_else(|| Error::NoGroup(name))?;
-            let group = index
-                .iter()
-                .filter_map(|index| {
-                    usize::try_from(*index)
-                        .ok()
-                        .and_then(|index| captures.at(index))
-                })
-                .last();
+            let group = captures.get(index).map(|m| m.as_str());
             Ok(Value::convert(interp, group))
         }
         Args::StartLen(start, len) => {
@@ -140,7 +140,7 @@ pub fn method(interp: &Artichoke, args: Args, value: &Value) -> Result<Value, Er
             };
             let mut matches = vec![];
             for index in start..(start + len) {
-                matches.push(captures.at(index));
+                matches.push(captures.get(index).map(|m| m.as_str()));
             }
             Ok(Value::convert(interp, matches))
         }

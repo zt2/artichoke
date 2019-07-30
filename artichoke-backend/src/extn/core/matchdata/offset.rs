@@ -65,16 +65,19 @@ pub fn method(interp: &Artichoke, args: Args, value: &Value) -> Result<Value, Er
         Args::Name(name) => {
             let index = regex
                 .capture_names()
-                .find(|capture| capture.0 == name)
-                .ok_or(Error::NoGroup)?;
-            usize::try_from(index.1[0]).map_err(|_| Error::Fatal)?
+                .enumerate()
+                .find(|(_idx, capture)| capture == &Some(name.as_str()))
+                .ok_or(Error::NoGroup)?
+                .0;
+            let capture = regex.capture_locations().get(index).ok_or(Error::Fatal)?;
+            capture.0
         }
     };
-    let (begin, end) = captures.pos(index).ok_or(Error::NoMatch)?;
-    let begin = match_against[0..begin].chars().count();
+    let match_ = captures.get(index).ok_or(Error::NoMatch)?;
+    let begin = match_against[0..match_.start()].chars().count();
     let begin = begin + borrow.region.start;
     let begin = Int::try_from(begin).map_err(|_| Error::Fatal)?;
-    let end = match_against[0..end].chars().count();
+    let end = match_against[0..match_.end()].chars().count();
     let end = end + borrow.region.start;
     let end = Int::try_from(end).map_err(|_| Error::Fatal)?;
     Ok(Value::convert(&interp, vec![begin, end]))

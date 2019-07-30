@@ -1,5 +1,6 @@
 //! [`Regexp#named_captures`](https://ruby-doc.org/core-2.6.3/Regexp.html#method-i-named_captures)
 
+use std::collections::HashMap;
 use std::convert::TryFrom;
 
 use crate::convert::{Convert, RustBackedValue};
@@ -19,14 +20,29 @@ pub fn method(interp: &Artichoke, value: &Value) -> Result<Value, Error> {
     let regex = (*borrow.regex).as_ref().ok_or(Error::Fatal)?;
     // Use a Vec of key-value pairs because insertion order matters for spec
     // compliance.
-    let mut map = vec![];
-    for (name, index) in regex.capture_names() {
-        let mut indexes = vec![];
-        for idx in index {
-            let idx = Int::try_from(*idx).map_err(|_| Error::Fatal)?;
-            indexes.push(idx);
+    let mut map = HashMap::new();
+    let mut captures = vec![];
+    for (idx, name) in regex.capture_names().enumerate() {
+        if let Some(name) = name {
+            if !map.contains_key(name) {
+                captures.push(name);
+                map.insert(name.to_owned(), vec![]);
+            }
+            if let Some(indexes) = map.get_mut(name) {
+                let idx = Int::try_from(idx).map_err(|_| Error::Fatal)?;
+                indexes.push(idx);
+            }
         }
-        map.push((name, Value::convert(interp, indexes)));
     }
-    Ok(Value::convert(interp, map))
+    let pairs = captures
+        .into_iter()
+        .filter_map(|name| {
+            if let Some(indexes) = map.remove(name) {
+                Some((name.to_owned(), indexes))
+            } else {
+                None
+            }
+        })
+        .collect::<Vec<_>>();
+    Ok(Value::convert(interp, pairs))
 }

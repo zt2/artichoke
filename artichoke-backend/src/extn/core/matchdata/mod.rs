@@ -12,7 +12,7 @@
 //! are
 //! [implemented in Ruby](https://github.com/artichoke/artichoke/blob/master/artichoke-backend/src/extn/core/matchdata/matchdata.rb).
 
-use onig::Regex;
+use regex::Regex;
 
 use crate::convert::{Convert, RustBackedValue};
 use crate::def::{rust_data_free, ClassLike, Define};

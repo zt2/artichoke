@@ -84,5 +84,5 @@ pub fn method(interp: &Artichoke, args: Args, value: &Value) -> Result<Value, Er
     let borrow = data.borrow();
     let regex = (*borrow.regex).as_ref().ok_or(Error::Fatal)?;
     let match_target = &string[byte_offset..];
-    Ok(Value::convert(interp, regex.find(match_target).is_some()))
+    Ok(Value::convert(interp, regex.is_match(match_target)))
 }

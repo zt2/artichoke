@@ -4,12 +4,12 @@
 //! Each function on `Regexp` is implemented as its own module which contains
 //! the `Args` struct for invoking the function.
 
-use onig::{Regex, Syntax};
+use regex::Regex;
 use std::hash::{Hash, Hasher};
 use std::mem;
 use std::rc::Rc;
 
-use crate::convert::{Convert, RustBackedValue, TryConvert};
+use crate::convert::{Convert, RustBackedValue};
 use crate::def::{rust_data_free, ClassLike, Define};
 use crate::eval::Eval;
 use crate::extn::core::error::{RubyException, RuntimeError, SyntaxError, TypeError};
@@ -145,15 +145,9 @@ impl Hash for Regexp {
 
 impl RustBackedValue for Regexp {
     fn new_obj_args(&self, interp: &Artichoke) -> Vec<sys::mrb_value> {
-        let literal_options = unsafe {
-            // use try_convert to support 32-bit Int.
-            Value::try_convert(interp, self.literal_options.flags().bits())
-                .unwrap()
-                .inner()
-        };
         vec![
             Value::convert(interp, self.literal_pattern.as_str()).inner(),
-            literal_options,
+            Value::convert(interp, self.literal_options.flags()).inner(),
             Value::convert(interp, self.encoding.flags()).inner(),
         ]
     }
@@ -178,7 +172,7 @@ impl Regexp {
         options: opts::Options,
         encoding: enc::Encoding,
     ) -> Option<Self> {
-        let regex = Regex::with_options(&pattern, options.flags(), Syntax::ruby()).ok()?;
+        let regex = Regex::new(&pattern).ok()?;
         let regex = Rc::new(Some(regex));
         let regexp = Self {
             literal_pattern,

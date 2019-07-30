@@ -1,7 +1,5 @@
 //! [`MatchData#names`](https://ruby-doc.org/core-2.6.3/MatchData.html#method-i-names)
 
-use std::cmp::Ordering;
-
 use crate::convert::{Convert, RustBackedValue};
 use crate::extn::core::matchdata::MatchData;
 use crate::value::Value;
@@ -17,14 +15,8 @@ pub fn method(interp: &Artichoke, value: &Value) -> Result<Value, Error> {
     let borrow = data.borrow();
     let regex = (*borrow.regexp.regex).as_ref().ok_or(Error::Fatal)?;
     let mut names = vec![];
-    let mut capture_names = regex.capture_names().collect::<Vec<_>>();
-    capture_names.sort_by(|a, b| {
-        a.1.iter()
-            .fold(u32::max_value(), |a, &b| a.min(b))
-            .partial_cmp(b.1.iter().fold(&u32::max_value(), |a, b| a.min(b)))
-            .unwrap_or(Ordering::Equal)
-    });
-    for (name, _) in capture_names {
+    let capture_names = regex.capture_names().collect::<Vec<_>>();
+    for name in capture_names {
         if !names.contains(&name) {
             names.push(name);
         }

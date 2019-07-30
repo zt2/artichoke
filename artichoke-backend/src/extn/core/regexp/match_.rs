@@ -112,7 +112,7 @@ pub fn method(interp: &Artichoke, args: Args, value: &Value) -> Result<Value, Er
                 interp.borrow_mut().sym_intern(&format!("${}", group))
             };
 
-            let value = Value::convert(&interp, captures.at(group));
+            let value = Value::convert(&interp, captures.get(group).map(|m| m.as_str()));
             unsafe {
                 sys::mrb_gv_set(mrb, sym, value.inner());
             }
@@ -120,9 +120,9 @@ pub fn method(interp: &Artichoke, args: Args, value: &Value) -> Result<Value, Er
         interp.borrow_mut().num_set_regexp_capture_globals = captures.len();
 
         let mut matchdata = MatchData::new(string.as_str(), borrow.clone(), 0, string.len());
-        if let Some(match_pos) = captures.pos(0) {
-            let pre_match = &match_target[..match_pos.0];
-            let post_match = &match_target[match_pos.1..];
+        if let Some(match_) = captures.get(0) {
+            let pre_match = &string[..match_.start()];
+            let post_match = &string[match_.end()..];
             unsafe {
                 let pre_match_sym = interp.borrow_mut().sym_intern("$`");
                 sys::mrb_gv_set(
@@ -137,7 +137,7 @@ pub fn method(interp: &Artichoke, args: Args, value: &Value) -> Result<Value, Er
                     Value::convert(interp, post_match).inner(),
                 );
             }
-            matchdata.set_region(byte_offset + match_pos.0, byte_offset + match_pos.1);
+            matchdata.set_region(byte_offset + match_.start(), byte_offset + match_.end());
         }
         let data = unsafe { matchdata.try_into_ruby(interp, None) }.map_err(|_| Error::Fatal)?;
         unsafe {

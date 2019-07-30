@@ -97,19 +97,22 @@ pub fn method(interp: &Artichoke, args: Args, value: Value) -> Result<Value, Err
                     interp.borrow_mut().sym_intern(&format!("${}", group))
                 };
 
-                let capture = captures.at(group);
-                if group > 0 {
-                    groups.push(captures.at(group));
-                }
-                unsafe {
-                    sys::mrb_gv_set(mrb, sym, Value::convert(interp, capture).inner());
+                if let Some(capture) = captures.get(group) {
+                    if group > 0 {
+                        groups.push(capture.as_str());
+                    }
+                    unsafe {
+                        sys::mrb_gv_set(mrb, sym, Value::convert(interp, capture.as_str()).inner());
+                    }
                 }
             }
             interp.borrow_mut().num_set_regexp_capture_globals = captures.len();
 
             let matched = Value::convert(interp, groups);
-            if let Some(pos) = captures.pos(0) {
-                matchdata.borrow_mut().set_region(pos.0, pos.1);
+            if let Some(match_) = captures.get(0) {
+                matchdata
+                    .borrow_mut()
+                    .set_region(match_.start(), match_.end());
             }
             if let Some(ref block) = args.block {
                 unsafe {
@@ -121,11 +124,13 @@ pub fn method(interp: &Artichoke, args: Args, value: Value) -> Result<Value, Err
             }
         }
     } else {
-        for pos in regex.find_iter(s.as_str()) {
+        for match_ in regex.find_iter(s.as_str()) {
             was_match = true;
-            let scanned = &s[pos.0..pos.1];
+            let scanned = &s[match_.start()..match_.end()];
             let matched = Value::convert(interp, scanned);
-            matchdata.borrow_mut().set_region(pos.0, pos.1);
+            matchdata
+                .borrow_mut()
+                .set_region(match_.start(), match_.end());
             if let Some(ref block) = args.block {
                 unsafe {
                     sys::mrb_yield(mrb, block.inner(), matched.inner());

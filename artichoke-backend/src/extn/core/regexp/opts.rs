@@ -1,7 +1,5 @@
 //! Parse options parameter to `Regexp#initialize` and `Regexp::compile`.
 
-use onig::RegexOptions;
-
 use crate::extn::core::regexp::Regexp;
 use crate::types::Int;
 use crate::value::Value;
@@ -20,16 +18,16 @@ impl Options {
         opts
     }
 
-    pub fn flags(self) -> RegexOptions {
-        let mut bits = RegexOptions::REGEX_OPTION_NONE;
+    pub fn flags(self) -> Int {
+        let mut bits = 0;
         if self.multiline {
-            bits |= RegexOptions::REGEX_OPTION_MULTILINE;
+            bits |= Regexp::MULTILINE;
         }
         if self.ignore_case {
-            bits |= RegexOptions::REGEX_OPTION_IGNORECASE;
+            bits |= Regexp::IGNORECASE;
         }
         if self.extended {
-            bits |= RegexOptions::REGEX_OPTION_EXTEND;
+            bits |= Regexp::EXTENDED;
         }
         bits
     }

@@ -20,6 +20,8 @@ pub fn method(interp: &Artichoke, value: &Value) -> Result<Value, Error> {
     let mut iter = captures.iter();
     // skip 0 (full match) capture group
     iter.next();
-    let vec = iter.collect::<Vec<_>>();
+    let vec = iter
+        .map(|capture| capture.map(|m| m.as_str()))
+        .collect::<Vec<_>>();
     Ok(Value::convert(&interp, vec))
 }
