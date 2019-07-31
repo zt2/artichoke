@@ -176,12 +176,6 @@
 <span id="176">176</span>
 <span id="177">177</span>
 <span id="178">178</span>
-<span id="179">179</span>
-<span id="180">180</span>
-<span id="181">181</span>
-<span id="182">182</span>
-<span id="183">183</span>
-<span id="184">184</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! [`Kernel#require`](https://ruby-doc.org/core-2.6.3/Kernel.html#method-i-require)</span>
 
@@ -267,7 +261,6 @@
 
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">method</span> {
     <span class="kw">use</span> <span class="ident">log</span>::<span class="ident">trace</span>;
-    <span class="kw">use</span> <span class="ident">path_abs</span>::<span class="ident">PathAbs</span>;
     <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::{<span class="ident">Path</span>, <span class="ident">PathBuf</span>};
     <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
 
@@ -310,11 +303,6 @@
             <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">path</span>.<span class="ident">join</span>(<span class="ident">args</span>.<span class="ident">file</span>.<span class="ident">as_str</span>())]
         };
         <span class="kw">for</span> <span class="ident">path</span> <span class="kw">in</span> <span class="ident">files</span> {
-            <span class="comment">// canonicalize path (remove &#39;.&#39; and &#39;..&#39; components).</span>
-            <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">PathAbs</span>::<span class="ident">new</span>(<span class="ident">path</span>) {
-                <span class="prelude-val">Ok</span>(<span class="ident">path</span>) <span class="op">=&gt;</span> <span class="ident">path</span>,
-                <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="kw">continue</span>,
-            };
             <span class="kw">let</span> <span class="ident">is_file</span> <span class="op">=</span> {
                 <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">interp</span>.<span class="ident">borrow</span>();
                 <span class="ident">api</span>.<span class="ident">vfs</span>.<span class="ident">is_file</span>(<span class="ident">path</span>.<span class="ident">as_path</span>())

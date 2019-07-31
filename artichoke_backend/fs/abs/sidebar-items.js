@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Error",""],["PathAbs","An absolute (not necessarily [canonicalized][1]) path that may or may not exist."]],"type":[["Result",""]]});
