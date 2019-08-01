@@ -82,7 +82,7 @@ pub fn method(interp: &Artichoke, args: Args, value: Value) -> Result<Value, Err
     let regex = (*regexp.regex).as_ref().ok_or(Error::Fatal)?;
     let len = regex.captures_len();
 
-    if len > 0 {
+    if len > 1 {
         for captures in regex.captures_iter(s.as_str()) {
             was_match = true;
             let mut groups = vec![];
