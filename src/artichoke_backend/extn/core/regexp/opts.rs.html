@@ -190,6 +190,14 @@
 <span id="190">190</span>
 <span id="191">191</span>
 <span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Parse options parameter to `Regexp#initialize` and `Regexp::compile`.</span>
 
@@ -227,7 +235,10 @@
         <span class="ident">bits</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">modifier_string</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
+    <span class="comment">// This function should return a &amp;&#39;static str but linking fails under the</span>
+    <span class="comment">// wasm32-unknown-emscripten build if this function does not return an owned</span>
+    <span class="comment">// String.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">modifier_string</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
         <span class="kw">match</span> (<span class="self">self</span>.<span class="ident">multiline</span>, <span class="self">self</span>.<span class="ident">ignore_case</span>, <span class="self">self</span>.<span class="ident">extended</span>) {
             (<span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>) <span class="op">=&gt;</span> <span class="string">&quot;mix&quot;</span>,
             (<span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">false</span>) <span class="op">=&gt;</span> <span class="string">&quot;mi&quot;</span>,
@@ -238,9 +249,13 @@
             (<span class="bool-val">false</span>, <span class="bool-val">false</span>, <span class="bool-val">true</span>) <span class="op">=&gt;</span> <span class="string">&quot;x&quot;</span>,
             (<span class="bool-val">false</span>, <span class="bool-val">false</span>, <span class="bool-val">false</span>) <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>,
         }
+        .<span class="ident">to_owned</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">onig_string</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
+    <span class="comment">// This function should return a &amp;&#39;static str but linking fails under the</span>
+    <span class="comment">// wasm32-unknown-emscripten build if this function does not return an owned</span>
+    <span class="comment">// String.</span>
+    <span class="kw">fn</span> <span class="ident">onig_string</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
         <span class="kw">match</span> (<span class="self">self</span>.<span class="ident">multiline</span>, <span class="self">self</span>.<span class="ident">ignore_case</span>, <span class="self">self</span>.<span class="ident">extended</span>) {
             (<span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>) <span class="op">=&gt;</span> <span class="string">&quot;mix&quot;</span>,
             (<span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">false</span>) <span class="op">=&gt;</span> <span class="string">&quot;mi-x&quot;</span>,
@@ -251,6 +266,7 @@
             (<span class="bool-val">false</span>, <span class="bool-val">false</span>, <span class="bool-val">true</span>) <span class="op">=&gt;</span> <span class="string">&quot;x-mi&quot;</span>,
             (<span class="bool-val">false</span>, <span class="bool-val">false</span>, <span class="bool-val">false</span>) <span class="op">=&gt;</span> <span class="string">&quot;-mix&quot;</span>,
         }
+        .<span class="ident">to_owned</span>()
     }
 }
 
@@ -297,14 +313,14 @@
     <span class="kw">match</span> <span class="ident">chars</span>.<span class="ident">next</span>() {
         <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
             <span class="ident">pat_buf</span>.<span class="ident">push_str</span>(<span class="string">&quot;(?&quot;</span>);
-            <span class="ident">pat_buf</span>.<span class="ident">push_str</span>(<span class="ident">opts</span>.<span class="ident">onig_string</span>());
+            <span class="ident">pat_buf</span>.<span class="ident">push_str</span>(<span class="ident">opts</span>.<span class="ident">onig_string</span>().<span class="ident">as_str</span>());
             <span class="ident">pat_buf</span>.<span class="ident">push</span>(<span class="string">&#39;:&#39;</span>);
             <span class="ident">pat_buf</span>.<span class="ident">push</span>(<span class="string">&#39;)&#39;</span>);
             <span class="kw">return</span> (<span class="ident">pat_buf</span>, <span class="ident">opts</span>);
         }
         <span class="prelude-val">Some</span>(<span class="ident">token</span>) <span class="kw">if</span> <span class="ident">token</span> <span class="op">!=</span> <span class="string">&#39;(&#39;</span> <span class="op">=&gt;</span> {
             <span class="ident">pat_buf</span>.<span class="ident">push_str</span>(<span class="string">&quot;(?&quot;</span>);
-            <span class="ident">pat_buf</span>.<span class="ident">push_str</span>(<span class="ident">opts</span>.<span class="ident">onig_string</span>());
+            <span class="ident">pat_buf</span>.<span class="ident">push_str</span>(<span class="ident">opts</span>.<span class="ident">onig_string</span>().<span class="ident">as_str</span>());
             <span class="ident">pat_buf</span>.<span class="ident">push</span>(<span class="string">&#39;:&#39;</span>);
             <span class="ident">pat_buf</span>.<span class="ident">push_str</span>(<span class="ident">pattern</span>);
             <span class="ident">pat_buf</span>.<span class="ident">push</span>(<span class="string">&#39;)&#39;</span>);
@@ -316,7 +332,7 @@
     <span class="kw">match</span> <span class="ident">chars</span>.<span class="ident">next</span>() {
         <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
             <span class="ident">pat_buf</span>.<span class="ident">push_str</span>(<span class="string">&quot;(?&quot;</span>);
-            <span class="ident">pat_buf</span>.<span class="ident">push_str</span>(<span class="ident">opts</span>.<span class="ident">onig_string</span>());
+            <span class="ident">pat_buf</span>.<span class="ident">push_str</span>(<span class="ident">opts</span>.<span class="ident">onig_string</span>().<span class="ident">as_str</span>());
             <span class="ident">pat_buf</span>.<span class="ident">push</span>(<span class="string">&#39;:&#39;</span>);
             <span class="ident">pat_buf</span>.<span class="ident">push_str</span>(<span class="ident">pattern</span>);
             <span class="ident">pat_buf</span>.<span class="ident">push</span>(<span class="string">&#39;)&#39;</span>);
@@ -324,7 +340,7 @@
         }
         <span class="prelude-val">Some</span>(<span class="ident">token</span>) <span class="kw">if</span> <span class="ident">token</span> <span class="op">!=</span> <span class="string">&#39;?&#39;</span> <span class="op">=&gt;</span> {
             <span class="ident">pat_buf</span>.<span class="ident">push_str</span>(<span class="string">&quot;(?&quot;</span>);
-            <span class="ident">pat_buf</span>.<span class="ident">push_str</span>(<span class="ident">opts</span>.<span class="ident">onig_string</span>());
+            <span class="ident">pat_buf</span>.<span class="ident">push_str</span>(<span class="ident">opts</span>.<span class="ident">onig_string</span>().<span class="ident">as_str</span>());
             <span class="ident">pat_buf</span>.<span class="ident">push</span>(<span class="string">&#39;:&#39;</span>);
             <span class="ident">pat_buf</span>.<span class="ident">push_str</span>(<span class="ident">pattern</span>);
             <span class="ident">pat_buf</span>.<span class="ident">push</span>(<span class="string">&#39;)&#39;</span>);
@@ -349,7 +365,7 @@
             <span class="string">&#39;:&#39;</span> <span class="op">=&gt;</span> <span class="kw">break</span>,
             <span class="kw">_</span> <span class="op">=&gt;</span> {
                 <span class="ident">pat_buf</span>.<span class="ident">push_str</span>(<span class="string">&quot;(?&quot;</span>);
-                <span class="ident">pat_buf</span>.<span class="ident">push_str</span>(<span class="ident">opts</span>.<span class="ident">onig_string</span>());
+                <span class="ident">pat_buf</span>.<span class="ident">push_str</span>(<span class="ident">opts</span>.<span class="ident">onig_string</span>().<span class="ident">as_str</span>());
                 <span class="ident">pat_buf</span>.<span class="ident">push</span>(<span class="string">&#39;:&#39;</span>);
                 <span class="ident">pat_buf</span>.<span class="ident">push_str</span>(<span class="ident">pattern</span>);
                 <span class="ident">pat_buf</span>.<span class="ident">push</span>(<span class="string">&#39;)&#39;</span>);

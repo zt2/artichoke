@@ -126,8 +126,6 @@
 <span id="126">126</span>
 <span id="127">127</span>
 <span id="128">128</span>
-<span id="129">129</span>
-<span id="130">130</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">warnings</span>, <span class="ident">intra_doc_link_resolution_failure</span>)]</span>
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">clippy</span>::<span class="ident">all</span>, <span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
@@ -248,10 +246,8 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">link_args</span> <span class="op">=</span> <span class="string">r#&quot;
     -s WASM=1
-    -s LINKABLE=1
     -s ASSERTIONS=1
     -s ENVIRONMENT=&#39;web&#39;
-    -s TOTAL_MEMORY=5242880
     -s EXPORTED_FUNCTIONS=[&quot;_artichoke_web_repl_init&quot;,&quot;_artichoke_string_new&quot;,&quot;_artichoke_string_free&quot;,&quot;_artichoke_string_getlen&quot;,&quot;_artichoke_string_getch&quot;,&quot;_artichoke_string_putch&quot;,&quot;_artichoke_eval&quot;]
     -s EXTRA_EXPORTED_RUNTIME_METHODS=[&quot;ccall&quot;,&quot;cwrap&quot;]
 &quot;#</span>)]</span>
