@@ -17,8 +17,10 @@ pub fn method(interp: &Artichoke, value: &Value) -> Result<Value, Error> {
     let mut names = vec![];
     let capture_names = regex.capture_names().collect::<Vec<_>>();
     for name in capture_names {
-        if !names.contains(&name) {
-            names.push(name);
+        if let Some(name) = name {
+            if !names.contains(&name) {
+                names.push(name);
+            }
         }
     }
     Ok(Value::convert(interp, names))
