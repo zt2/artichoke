@@ -63,6 +63,8 @@ end
 
 puts "String#scan bench for #{RUBY_DESCRIPTION}"
 
+bench('All', '.')
+
 bench('Email', '[\w\.+-]+@[\w\.-]+\.[\w\.-]+')
 
 begin
