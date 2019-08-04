@@ -4,7 +4,7 @@
 //! Each function on `Regexp` is implemented as its own module which contains
 //! the `Args` struct for invoking the function.
 
-use regex::Regex;
+use regex::{Regex, RegexBuilder};
 use std::hash::{Hash, Hasher};
 use std::mem;
 use std::rc::Rc;
@@ -172,7 +172,13 @@ impl Regexp {
         options: opts::Options,
         encoding: enc::Encoding,
     ) -> Option<Self> {
-        let regex = Regex::new(&pattern).ok()?;
+        let regex = RegexBuilder::new(&literal_pattern)
+            .multi_line(true)
+            .dot_matches_new_line(options.multiline)
+            .case_insensitive(options.ignore_case)
+            .ignore_whitespace(options.extended)
+            .build()
+            .ok()?;
         let regex = Rc::new(Some(regex));
         let regexp = Self {
             literal_pattern,
