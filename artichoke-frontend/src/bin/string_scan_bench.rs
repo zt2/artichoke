@@ -40,11 +40,17 @@ fn main() {
         eprintln!("Unable to read program: {}", err);
         process::exit(1);
     }
-
-    let data = Value::convert(
-        &interp,
-        include_bytes!("../../ruby/fixtures/learnxinyminutes.txt").as_ref(),
-    );
+    let data = if env::args().any(|arg| arg == "--ascii") {
+        Value::convert(
+            &interp,
+            include_bytes!("../../ruby/fixtures/learnxinyminutes.ascii.txt").as_ref(),
+        )
+    } else {
+        Value::convert(
+            &interp,
+            include_bytes!("../../ruby/fixtures/learnxinyminutes.txt").as_ref(),
+        )
+    };
     data.protect();
     unsafe { sys::mrb_gv_set(mrb, interp.borrow_mut().sym_intern("$data"), data.inner()) }
     let ctx = Context::new("(main)");

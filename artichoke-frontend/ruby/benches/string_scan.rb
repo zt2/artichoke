@@ -10,7 +10,11 @@ end
 ITERATIONS = 50
 
 def data
-  File.read(File.join(__dir__, '..', 'fixtures', 'learnxinyminutes.txt'))
+  if ARGV.include?('--ascii')
+    File.read(File.join(__dir__, '..', 'fixtures', 'learnxinyminutes.ascii.txt'))
+  else
+    File.read(File.join(__dir__, '..', 'fixtures', 'learnxinyminutes.txt'))
+  end
 rescue StandardError
   $data # rubocop:disable Style/GlobalVars
 end
@@ -63,20 +67,31 @@ end
 
 puts "String#scan bench for #{RUBY_DESCRIPTION}"
 
-bench('All', '.')
-
-bench('Email', '[\w\.+-]+@[\w\.-]+\.[\w\.-]+')
-
-begin
-  # regex crate has pathological behavior when mixing unicode and \b
-  bench('URI', 'https?://(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}(?-u:\b)([-a-zA-Z0-9()@:%_\+.~#?&//=]*)')
-rescue SyntaxError, RegexpError
-  bench('URI', 'https?://(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)')
-end
-
-begin
-  # regex crate has pathological behavior when mixing unicode and \b
-  bench('IP', '(?-u:\b)(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])(?-u:\b)')
-rescue SyntaxError, RegexpError
-  bench('IP', '\b(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\b')
-end
+# bench(
+#   'Dot',
+#   '.{10000}'
+# )
+bench(
+  'Anchor',
+  '^## '
+)
+bench(
+  'Email',
+  '[\w\.+-]+@[\w\.-]+\.[\w\.-]+'
+)
+bench(
+  'URI - lookahead',
+  '[\w]+:\/\/[^\/\s?#]+[^\s?#]+(?:\?[^\s#]*)?(?:#[^\s]*)?'
+)
+bench(
+  'URI - word boundary',
+  'https?://(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)'
+)
+bench(
+  'IP - lookahead',
+  '(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9])'
+)
+bench(
+  'IP - word boundary',
+  '\b(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\b'
+)
