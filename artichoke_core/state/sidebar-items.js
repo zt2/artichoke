@@ -1,0 +1,1 @@
+initSidebarItems({"trait":[["OutputCapture","Interpreters that implement [`OutputCapture`] expose methods for redirecting stdout and stderr to an internal `String` buffer and retrieving it later."]]});

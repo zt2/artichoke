@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Error","Error for a failed conversion from `From` to `To`."]],"trait":[["Convert","Infallible conversion between two types."],["TryConvert","Fallible conversions between two types."]]});

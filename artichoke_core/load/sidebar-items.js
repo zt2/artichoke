@@ -1,0 +1,1 @@
+initSidebarItems({"trait":[["LoadSources","Interpreters that implement [`LoadSources`] expose methods for loading Ruby and Rust sources into the VM."]]});

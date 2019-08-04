@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["LastError","Represents the error state of the last group of statements on the VM."]],"struct":[["Exception","Metadata about a Ruby exception."]],"trait":[["ExceptionHandler","Extract the last exception thrown on the interpreter."]]});
