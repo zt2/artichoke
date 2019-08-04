@@ -151,6 +151,7 @@
 <span id="151">151</span>
 <span id="152">152</span>
 <span id="153">153</span>
+<span id="154">154</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
@@ -159,7 +160,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">matchdata</span>::<span class="ident">MatchData</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">regexp</span>::<span class="ident">enc</span>::<span class="ident">Encoding</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">regexp</span>::<span class="ident">opts</span>::<span class="ident">Options</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">regexp</span>::{<span class="ident">syntax</span>, <span class="ident">Regexp</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">regexp</span>::{<span class="ident">syntax</span>, <span class="ident">Backend</span>, <span class="ident">Regexp</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">gc</span>::<span class="ident">MrbGarbageCollection</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::{<span class="ident">Value</span>, <span class="ident">ValueLike</span>};
@@ -234,6 +235,7 @@
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">was_match</span> <span class="op">=</span> <span class="bool-val">false</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">collected</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
     <span class="kw">let</span> <span class="ident">regex</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">regexp</span>.<span class="ident">regex</span>).<span class="ident">as_ref</span>().<span class="ident">ok_or</span>(<span class="ident">Error</span>::<span class="ident">Fatal</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">Backend</span>::<span class="ident">Onig</span>(<span class="ident">regex</span>) <span class="op">=</span> <span class="ident">regex</span>;
     <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">regex</span>.<span class="ident">captures_len</span>();
 
     <span class="kw">if</span> <span class="ident">len</span> <span class="op">&gt;</span> <span class="number">0</span> {

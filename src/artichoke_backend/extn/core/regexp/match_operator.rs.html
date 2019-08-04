@@ -136,6 +136,7 @@
 <span id="136">136</span>
 <span id="137">137</span>
 <span id="138">138</span>
+<span id="139">139</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! [`Regexp#=~`](https://ruby-doc.org/core-2.6.3/Regexp.html#method-i-3D-7E)</span>
 
@@ -145,7 +146,7 @@
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">convert</span>::{<span class="ident">Convert</span>, <span class="ident">RustBackedValue</span>, <span class="ident">TryConvert</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">matchdata</span>::<span class="ident">MatchData</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">regexp</span>::<span class="ident">Regexp</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">extn</span>::<span class="ident">core</span>::<span class="ident">regexp</span>::{<span class="ident">Backend</span>, <span class="ident">Regexp</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">sys</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::<span class="ident">Int</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">value</span>::<span class="ident">Value</span>;
@@ -189,6 +190,7 @@
     <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">Regexp</span>::<span class="ident">try_from_ruby</span>(<span class="ident">interp</span>, <span class="ident">value</span>) }.<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error</span>::<span class="ident">Fatal</span>)<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">borrow</span> <span class="op">=</span> <span class="ident">data</span>.<span class="ident">borrow</span>();
     <span class="kw">let</span> <span class="ident">regex</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">borrow</span>.<span class="ident">regex</span>).<span class="ident">as_ref</span>().<span class="ident">ok_or</span>(<span class="ident">Error</span>::<span class="ident">Fatal</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">Backend</span>::<span class="ident">Onig</span>(<span class="ident">regex</span>) <span class="op">=</span> <span class="ident">regex</span>;
     <span class="kw">let</span> <span class="ident">string</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">string</span>) <span class="op">=</span> <span class="ident">args</span>.<span class="ident">string</span> {
         <span class="ident">string</span>
     } <span class="kw">else</span> {
