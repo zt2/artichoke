@@ -444,6 +444,8 @@
 <span id="444">444</span>
 <span id="445">445</span>
 <span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! [ruby/spec](https://github.com/ruby/spec) compliant implementation of</span>
 <span class="doccomment">//! [`Regexp`](https://ruby-doc.org/core-2.6.3/Regexp.html).</span>
@@ -452,6 +454,7 @@
 <span class="doccomment">//! the `Args` struct for invoking the function.</span>
 
 <span class="kw">use</span> <span class="ident">onig</span>::{<span class="self">self</span>, <span class="ident">Syntax</span>};
+<span class="kw">use</span> <span class="ident">regex</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">hash</span>::{<span class="ident">Hash</span>, <span class="ident">Hasher</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
@@ -576,6 +579,7 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Backend</span> {
     <span class="ident">Onig</span>(<span class="ident">onig</span>::<span class="ident">Regex</span>),
+    <span class="ident">Rust</span>(<span class="ident">regex</span>::<span class="ident">Regex</span>),
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Default</span>)]</span>
