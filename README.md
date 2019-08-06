@@ -2,6 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/artichoke/artichoke.svg?style=svg)](https://circleci.com/gh/artichoke/artichoke)
 [![Discord](https://img.shields.io/discord/607683947496734760)](https://discord.gg/QCe2tp2)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fzt2%2Fartichoke.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fzt2%2Fartichoke?ref=badge_shield)
 <br>
 [![Core documentation](https://img.shields.io/badge/docs-artichoke--core-blue.svg)](https://artichoke.github.io/artichoke/artichoke_core/)
 [![Virtual filesystem documentation](https://img.shields.io/badge/docs-artichoke--vfs-blue.svg)](https://artichoke.github.io/artichoke/artichoke_vfs/)
@@ -142,3 +143,7 @@ please file one before beginning to work on a PR.
 
 If you'd like to engage in a discussion outside of GitHub, you can
 [join Artichoke's public Discord server](https://discord.gg/QCe2tp2).
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fzt2%2Fartichoke.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fzt2%2Fartichoke?ref=badge_large)
